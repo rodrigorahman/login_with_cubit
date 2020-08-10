@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
-        child: CubitProvider(
+        child: BlocProvider(
           create: (context) => Modular.get<LoginCubit>(),
           child: buildForm(),
         ),
@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget buildForm() {
-    return CubitConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginErrorState) {
           FlutterToast(context).showToast(
@@ -59,7 +59,7 @@ class LoginPage extends StatelessWidget {
               decoration: InputDecoration(labelText: 'password'),
             ),
             RaisedButton(
-              onPressed: () => context.cubit<LoginCubit>().login(loginController.text, passwordController.text),
+              onPressed: () => context.bloc<LoginCubit>().login(loginController.text, passwordController.text),
               child: Text('Logar'),
             )
           ],

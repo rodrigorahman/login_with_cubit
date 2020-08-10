@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_with_cubit/app/modules/home/cubit/home_cubit.dart';
@@ -7,14 +7,14 @@ import 'package:login_with_cubit/app/shared/debouncer.dart';
 
 class HomePage extends StatelessWidget {
   final Debouncer debouncer = Debouncer(milliseconds: 500);
-  HomeCubit _cubit = Modular.get<HomeCubit>();
+  final HomeCubit _cubit = Modular.get<HomeCubit>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: CubitProvider(
+      body: BlocProvider(
         create: (context) => _cubit..findRandomGifs(),
         child: Column(
           children: <Widget>[
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildGifs() {
-    return CubitConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
         if(state.errorMessage.isNotEmpty) {
           FlutterToast(context).showToast(
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildSelectedGif() {
-    return CubitConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<HomeCubit, HomeState>(
       buildWhen: (previous, current) => previous.gifSelecionado != current.gifSelecionado,
       listenWhen: (previous, current) => previous.gifSelecionado != current.gifSelecionado,
       listener: (context, state) {
