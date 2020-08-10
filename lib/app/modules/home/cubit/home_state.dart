@@ -6,6 +6,9 @@ class HomeState extends Equatable {
   final String errorMessage;
   final GifModel gifSelecionado;
 
+  @override
+  bool get stringify => true;
+
   HomeState({this.gifs, this.loading, this.errorMessage, this.gifSelecionado});
 
   HomeState.initialState()

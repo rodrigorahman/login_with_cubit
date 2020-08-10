@@ -1,4 +1,4 @@
-import 'package:cubit/cubit.dart';
+import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:login_with_cubit/app/models/git_model.dart';
 import 'package:login_with_cubit/app/repositories/gifs_repository.dart';
