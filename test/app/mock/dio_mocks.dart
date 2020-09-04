@@ -1,0 +1,9 @@
+
+import 'package:dio/dio.dart';
+import 'package:mockito/mockito.dart';
+
+class MockDio extends Mock implements Dio {}
+
+class MockResponse extends Mock implements Response {}
+
+class MockDioError extends Mock implements DioError {}
