@@ -6,8 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'cubit/login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
-  TextEditingController loginController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  
+  final TextEditingController loginController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,9 @@ class LoginPage extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginErrorState) {
+          print('mostrando taost');
           FlutterToast(context).showToast(
+            toastDuration: Duration(seconds: 1),
             child: Container(
               padding: EdgeInsets.all(10),
               color: Colors.red,
@@ -42,11 +45,12 @@ class LoginPage extends StatelessWidget {
         }
 
         if (state is LoginSuccessState) {
+          print('redirecionando');
           Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
         }
       },
       builder: (context, state) {
-        print(state);
+        print('login $state');
         return Column(
           children: <Widget>[
             if (state is LoginLoadingState) CircularProgressIndicator(),

@@ -21,17 +21,20 @@ void main() {
   });
 
   test('Should do login with success', () async {
+    
+    //Prepare
     final tokenResponse = 'TOKEN_CONEXAO';
-    //Conditionals
     when(response.data).thenReturn(<String, dynamic>{'token': tokenResponse});
     when(dio.post(any, data: anyNamed('data'))).thenAnswer((_) async => response);
     final loginRepository = LoginRepository(dio);
 
+    // execute
     final loginResult = await loginRepository.checkLogin('login', 'password');
 
+    // verify
     verify(dio.post(any, data: anyNamed('data'))).called(1);
-
     expect(loginResult, equals(tokenResponse));
+
   });
 
   test('should do login with error UserNotFoundException', () {

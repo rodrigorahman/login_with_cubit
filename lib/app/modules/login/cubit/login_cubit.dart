@@ -21,8 +21,10 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginSuccessState());
     } on UserNotFoundException {
       emit(LoginErrorState('Login ou senha inválido'));
-    } catch (e) {
+    } catch (e,s) {
       print(e);
+      print(s);
+
       emit(LoginErrorState('Erro ao realizar Login'));
     }
   }
