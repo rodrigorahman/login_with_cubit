@@ -25,4 +25,5 @@ class LoginRepository implements ILoginRepository {
 }
 
 abstract class ILoginRepository {
+  Future<String> checkLogin(String login, String password);
 }

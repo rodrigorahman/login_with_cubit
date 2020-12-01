@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final LoginRepository _repository;
+  final ILoginRepository _repository;
 
   LoginCubit(this._repository) : super(LoginInitial());
 
