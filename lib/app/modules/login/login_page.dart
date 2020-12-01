@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
         }
 
         if (state is LoginSuccessState) {
-          // Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
+          Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
         }
       },
       builder: (context, state) {

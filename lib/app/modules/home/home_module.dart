@@ -8,7 +8,7 @@ class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => GifRepository()),
-        Bind((i) => HomeCubit(i())),
+        Bind((i) => HomeCubit(i()), singleton: false),
       ];
 
   @override

@@ -1,15 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:login_with_cubit/app/shared/user_not_found_exception.dart';
 
-class LoginRepository {
-
-  final Dio _dio;
-
-  LoginRepository(this._dio);
+class LoginRepository implements ILoginRepository {
 
   Future<String> checkLogin(String login, String password) async {
     try {
-      final response = await _dio.post('http://localhost:8888/auth/login',
+      final dio = Dio();
+      final response = await dio.post('http://localhost:8888/auth/login',
         data: {'login': login, 'password': password}
       );
 
@@ -25,4 +22,7 @@ class LoginRepository {
     }
   }
 
+}
+
+abstract class ILoginRepository {
 }

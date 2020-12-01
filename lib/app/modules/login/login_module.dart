@@ -8,7 +8,7 @@ import 'cubit/login_cubit.dart';
 class LoginModule extends ChildModule {
   @override
   List<Bind> get binds => [
-    Bind((i) => LoginRepository(Dio())),
+    Bind((i) => LoginRepository()),
     Bind((i) => LoginCubit(i()), singleton: false)
   ];
 
