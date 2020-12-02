@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:login_with_cubit/app/shared/user_not_found_exception.dart';
 
-class LoginRepository {
+class LoginRepository implements ILoginRepository {
 
   final Dio _dio;
 
@@ -16,8 +16,8 @@ class LoginRepository {
       return response?.data['token'];
       
     } on DioError catch (e) {
-      
-      if(e.response.statusCode == 403) {
+      print(e);
+      if(e.response?.statusCode == 403) {
         throw UserNotFoundException();
       }
 
@@ -25,4 +25,9 @@ class LoginRepository {
     }
   }
 
+}
+
+
+abstract class ILoginRepository {
+  Future<String> checkLogin(String login, String password);
 }

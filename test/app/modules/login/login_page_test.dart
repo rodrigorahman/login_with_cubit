@@ -10,6 +10,8 @@ import 'package:login_with_cubit/app/shared/user_not_found_exception.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../helper/widget_helper.dart';
+
 class MockLoginRepository extends Mock implements LoginRepository {}
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
@@ -29,19 +31,17 @@ void main() {
     when(_loginRepository.checkLogin(any, any)).thenThrow(UserNotFoundException());
 
     initModule(LoginModule(), changeBinds: [
-      Bind((i) => LoginCubit(_loginRepository), singleton: true),
+      Bind((i) => LoginCubit(_loginRepository), singleton: false),
     ]);
 
+    // Quando não preciso adicionar o navigatorObservers
     await tester.pumpWidget(buildTestableWidget(LoginPage()));
 
-    var login = find.widgetWithText(TextFormField, 'Login');
-    await tester.enterText(login, 'rodrigorahman@gmail.com');
+    await enterTextByName(tester, TextFormField, 'Login', 'rodrigorahman');
+    await enterTextByName(tester, TextFormField, 'password', 'rodrigo123');
 
-    var senha = find.widgetWithText(TextFormField, 'password');
-    await tester.enterText(senha, 'rodrigo');
+    await tabButtonByText(tester, RaisedButton, 'Logar');
 
-    var botao = find.widgetWithText(RaisedButton, 'Logar');
-    await tester.tap(botao);
     await tester.pump();
 
     expect(find.byType(Overlay), findsOneWidget);
@@ -52,7 +52,7 @@ void main() {
     when(_loginRepository.checkLogin(any, any)).thenAnswer((_) => Future.delayed(Duration(seconds: 2), () => 'TOKEN' ));
 
     initModule(LoginModule(), changeBinds: [
-      Bind((i) => LoginCubit(_loginRepository), singleton: true),
+      Bind((i) => LoginCubit(_loginRepository), singleton: false),
     ]);
 
     await tester.pumpWidget(MaterialApp(
@@ -63,17 +63,15 @@ void main() {
       navigatorObservers: [_navigatorObserver],
     ));
 
-    var login = find.widgetWithText(TextFormField, 'Login');
-    await tester.enterText(login, 'rodrigorahman@gmail.com');
+   await enterTextByName(tester, TextFormField, 'Login', 'rodrigorahman');
+    await enterTextByName(tester, TextFormField, 'password', 'rodrigo123');
 
-    var senha = find.widgetWithText(TextFormField, 'password');
-    await tester.enterText(senha, 'rodrigo');
-
-    var botao = find.widgetWithText(RaisedButton, 'Logar');
-    await tester.tap(botao);
+    await tabButtonByText(tester, RaisedButton, 'Logar');
+    
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pumpAndSettle();
+    await tester.pump(Duration(seconds: 2));
+    
     verify(_navigatorObserver.didPush(any, any)).called(2);
 
     

@@ -15,6 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
       final gifs = await _repository.getRandomGif();
       emit(HomeState.result(gifs));
     } catch (e) {
+      print(e);
       emit(HomeState.error('Erro ao Buscar Gifs'));
     }
   }
@@ -23,14 +24,15 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(HomeState.loading());
       final gifs = await _repository.searchGif(value);
-      throw Exception();
       emit(HomeState.result(gifs));
     } catch (e) {
+      print(e);
       emit(HomeState.error('Erro ao Buscar Gifs'));
     }
   }
 
   Future<void> selectGif(GifModel gif)  async {
+    print(gif);
     emit(state.copyWith(loading: false, gifSelecionado: gif));
   }
 }

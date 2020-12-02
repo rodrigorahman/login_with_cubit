@@ -4,15 +4,25 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_with_cubit/app/modules/home/cubit/home_cubit.dart';
 import 'package:login_with_cubit/app/shared/debouncer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatelessWidget {
   final Debouncer debouncer = Debouncer(milliseconds: 500);
   final HomeCubit _cubit = Modular.get<HomeCubit>();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(icon: Icon(Icons.logout), onPressed: (){
+            SharedPreferences.getInstance().then((sp){
+              sp.clear();
+              Modular.to.pushNamed('/');
+            });
+          })
+        ],
       ),
       body: BlocProvider(
         create: (context) => _cubit..findRandomGifs(),
@@ -85,13 +95,10 @@ class HomePage extends StatelessWidget {
 
   Widget buildSelectedGif() {
     return BlocConsumer<HomeCubit, HomeState>(
-      buildWhen: (previous, current) => previous.gifSelecionado != current.gifSelecionado,
-      listenWhen: (previous, current) => previous.gifSelecionado != current.gifSelecionado,
       listener: (context, state) {
-        print(state.gifSelecionado.id);
+        // print(state.gifSelecionado.id);
       },
       builder: (context, state) {
-        print('montando Imagem');
         if (state.gifSelecionado != null) {
           return Container(
             child: Image.network(

@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
         }
 
         if (state is LoginSuccessState) {
-          // Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
+          Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
         }
       },
       builder: (context, state) {
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
             RaisedButton(
               onPressed: () => context.bloc<LoginCubit>().login(loginController.text, passwordController.text),
               child: Text('Logar'),
-            )
+            ),
           ],
         );
       },
