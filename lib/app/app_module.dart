@@ -14,13 +14,13 @@ class AppModule extends MainModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(
+  List<ModularRouter> get routers => [
+        ModularRouter(
           Modular.initialRoute,
           child: (context, args) => SplashPage(),
         ),
-        Router('/login', module: LoginModule()),
-        Router('/home', module: HomeModule()),
+        ModularRouter('/login', module: LoginModule()),
+        ModularRouter('/home', module: HomeModule()),
       ];
 
   @override

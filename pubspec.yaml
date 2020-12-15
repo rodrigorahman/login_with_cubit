@@ -23,7 +23,7 @@ environment:
 dependencies:
   dio: ^3.0.9
   equatable: ^1.2.0
-  flutter_modular: ^1.2.7+1
+  flutter_modular: ^2.0.1
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.8
